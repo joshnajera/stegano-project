@@ -24,7 +24,7 @@ def encode(file_name, input_string):
 
     debug("{} bits can represent a max value of {}".format(11, pow(2, MAX_LEN) - 1))
     debug("Which is to say a maximum of {} characters".format(floor((pow(2, MAX_LEN) - 1))))
-    if len(binary_string) > pow(MAX_LEN, 2) - 1:
+    if len(binary_string) > pow(2, MAX_LEN) - 1:
         debug("ERROR")
         return()
     
@@ -99,8 +99,8 @@ def arg_check():
         input_string = sys.argv[3]
     else:
         file_name = "output.png"
-        input_string = "hello world"
-        mode = 'decode'
+        input_string = "hello world welcome to steganography"
+        mode = 'encode'
         return (file_name, input_string, mode)
 
     if flag == '-e':
@@ -119,10 +119,10 @@ def gen_binary(input_string):
 
     # First get the binary encoding for each character '0bxxxxxxxx'
     binary_list = list(map(bin, str.encode(input_string)))
-    debug(binary_list)
+    debug("The binary representation is: " + " ".join(binary_list))
     # Remove the leading '0b' and merge all elements
-    binary_string = "".join([ truncated[2:] for truncated in binary_list])
-    debug(binary_string)
+    binary_string = "".join([ truncated[2:].zfill(7) for truncated in binary_list])
+    debug("The binary representation is: " + binary_string)
     return binary_string
 
 def pre_process(file_name):
